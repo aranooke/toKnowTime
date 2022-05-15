@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./js/index.js"></script>
+    <style>
+        * {
+            margin:0px;
+            padding:0px;
+        }
+        .main-block 
+        {
+            padding:50px;
+            background-color: white;
+            margin:100px;
+            border-radius:20px;
+            box-shadow:0 0 10px 10px black;
+            
+        }
+        body {
+            background-image: url("https://bipbap.ru/wp-content/uploads/2017/12/555_zakat-640x360.jpg");
+            background-repeat:no-repeat;
+            background-size:cover;
+        }
+        h2 {
+            font-size:26px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-block">
+        <h1>Напишите предложения на английском языке и узнайте время:</h1>
+        <textarea  name="" id="textarea" cols="50" rows="10"></textarea>
+        <button class="btn" id="btn">Отправить</button>
+        <div class="block"></div>
+    </div>
+    <script>
+        
+        const textarea = document.querySelector("#textarea");
+        const btn = document.querySelector(".btn");
+        const keyWords = ["today","often","usually"];
+        const block = document.querySelector(".block");
+        var regularExpr = [/e\s|es\s|am|is|are/,/ed|was|were/,/will \w+e/,/(am \w+ing)|(is \w+ing)|(are \w+ing)/,
+                            /(was \w+ing)|(were \w+ing)/,/will \w+ing/,/(have \w+ed\s?)| (has \w+ed\s?)/,
+                        /had \w+ed\s?/,/will have \w+ed\s?/]; // ,/will \w+ed/ //
+        var times = ["Present Simple","Past Simple","Future Simple","Present Continious","Past Continious",
+                    "Future Continious","Present Perfect","Past Perfect","Future Perfect"];
+        
+        btn.addEventListener("click",()=>{
+            
+            var array = textarea.value.split(/\.|!|\?/);
+            block.textContent = "";
+           
+            
+            for(let i = 0; i < array.length;i++){
+            for(let j = 0;j < regularExpr.length;j++)
+            {
+                if(array[i].match(regularExpr[j])) 
+                {
+                    var result = times[j];
+                    console.log(j,times[j]);
+                }
+                
+
+            }
+            block.innerHTML += `<div>
+                            <h2>${i}."${array[i]} is - "${result}" </h2>
+                        </div>`;
+        }
+
+            
+        })
+        
+        
+        
+    </script>
+</body>
+</html>
